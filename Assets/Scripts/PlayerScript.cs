@@ -121,8 +121,12 @@ public class PlayerScript : MonoBehaviour
 
     void playerDash(){
         while(timeLeft > 0){
-            rb.velocity = new Vector2(dashSpeed, rb.velocity.y);
-            timeLeft -= Time.deltaTime;
+            if (spriteRenderer.flipX){
+                rb.velocity = new Vector2(-dashSpeed, rb.velocity.y);
+            }
+            else{
+                rb.velocity = new Vector2(dashSpeed, rb.velocity.y);
+            }timeLeft -= Time.deltaTime;
             return;
         }
         dashCount++;

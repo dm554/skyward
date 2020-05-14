@@ -32,10 +32,21 @@ public class EnemyController : MonoBehaviour
     }
 
     void Movement(){
-        if (Timer()){
-            runspeed = runspeed * -1; 
+        
+        if(gameObject.name == "Grunt1"){
+            if (Timer()){
+                runspeed = runspeed * -1; 
+            }
+            rb.velocity = new Vector2(runspeed, rb.velocity.y);
         }
-        rb.velocity = new Vector2(runspeed, rb.velocity.y);
+
+        if(gameObject.name == "Grunt2"){
+            if (Timer()){
+                runspeed = runspeed * -1; 
+            }
+            rb.velocity = new Vector2(rb.velocity.x ,runspeed);
+        }
+        
     }
 
     bool Timer(){
