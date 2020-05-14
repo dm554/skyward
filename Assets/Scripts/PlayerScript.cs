@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -74,5 +75,18 @@ public class PlayerScript : MonoBehaviour
             return false;
         }
     }
+
+    void playerDeath(){
+        Debug.Log("Player Death");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.gameObject.tag == "Enemy" 
+        || other.gameObject.tag == "Hazard"){
+            playerDeath();
+        }
+    }
+    
 }
 
