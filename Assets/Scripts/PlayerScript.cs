@@ -8,6 +8,15 @@ public class PlayerScript : MonoBehaviour
     
     public float runspeed;
     public float jumpspeed;
+    
+    public int coinWinCon;
+    private int coinCount;
+    
+    public float dashTime;
+    private float timeLeft;
+    private float dashCount;
+    public float dashSpeed;
+
     private Rigidbody2D rb;
     Vector2 moveVelocity;
     SpriteRenderer spriteRenderer;
@@ -19,11 +28,14 @@ public class PlayerScript : MonoBehaviour
 
     [SerializeField]
     Transform wallCheckLeft;
+
+    
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        timeLeft = dashTime;
     }
 
     // Update is called once per frame
@@ -51,6 +63,14 @@ public class PlayerScript : MonoBehaviour
         }
         if (Input.GetKey("space") && (isGrounded() || onWall()) ){
             rb.velocity = new Vector2(rb.velocity.x, jumpspeed);
+        }
+        if (isGrounded()){
+            dashCount = 0; 
+            timeLeft = dashTime;
+        }
+        if(Input.GetKey("z") && dashCount < 1){
+            playerDash();
+
         }
 
     }
@@ -86,6 +106,26 @@ public class PlayerScript : MonoBehaviour
         || other.gameObject.tag == "Hazard"){
             playerDeath();
         }
+        if (other.gameObject.tag == "Pickup"){
+            PickupHandler(other.gameObject);
+        }
+    }
+
+    void PickupHandler(GameObject pickup){
+        if(pickup.tag == "Coin"){
+            Debug.Log("Coin picked up");
+            coinCount++;
+        }
+        Destroy(pickup);
+    }
+
+    void playerDash(){
+        while(timeLeft > 0){
+            rb.velocity = new Vector2(dashSpeed, rb.velocity.y);
+            timeLeft -= Time.deltaTime;
+            return;
+        }
+        dashCount++;
     }
     
 }
