@@ -122,6 +122,9 @@ public class PlayerScript : MonoBehaviour
         if (other.gameObject.tag == "Pickup"){
             PickupHandler(other.gameObject);
         }
+        if (other.gameObject.tag == "Level Completer"){
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        }
     }
 
     void PickupHandler(GameObject pickup){
@@ -143,6 +146,10 @@ public class PlayerScript : MonoBehaviour
             return;
         }
         dashCount++;
+    }
+
+    void LevelComplete(){
+
     }
     
 }
