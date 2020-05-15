@@ -18,6 +18,7 @@ public class PlayerScript : MonoBehaviour
     public float dashSpeed;
 
     private Rigidbody2D rb;
+    Animator animator;
     Vector2 moveVelocity;
     SpriteRenderer spriteRenderer;
     [SerializeField]
@@ -35,6 +36,7 @@ public class PlayerScript : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
         timeLeft = dashTime;
     }
 
@@ -52,17 +54,28 @@ public class PlayerScript : MonoBehaviour
         
         if (Input.GetKey("right")){
             rb.velocity = new Vector2(runspeed, rb.velocity.y);
+            if(isGrounded()){
+                animator.Play("Player_Run");
+            }
+            
             spriteRenderer.flipX = false;
         }
         else if(Input.GetKey("left")){
             rb.velocity = new Vector2(-runspeed, rb.velocity.y);
+            if(isGrounded()){
+                animator.Play("Player_Run");
+            }
             spriteRenderer.flipX = true;
         }
         else{
             rb.velocity = new Vector2(0, rb.velocity.y);
+            if(isGrounded()){
+                animator.Play("Player_Idle");
+            }
         }
         if (Input.GetKey("space") && (isGrounded() || onWall()) ){
             rb.velocity = new Vector2(rb.velocity.x, jumpspeed);
+            animator.Play("Player_Jump");
         }
         if (isGrounded()){
             dashCount = 0; 
