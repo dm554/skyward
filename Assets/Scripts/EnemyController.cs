@@ -38,6 +38,10 @@ public class EnemyController : MonoBehaviour
                 runspeed = runspeed * -1; 
             }
             rb.velocity = new Vector2(runspeed, rb.velocity.y);
+            if(runspeed < 1){
+                spriteRenderer.flipX = true;
+            }
+            else{spriteRenderer.flipX = false;}
         }
 
         if(gameObject.name == "Grunt2"){
@@ -46,7 +50,9 @@ public class EnemyController : MonoBehaviour
             }
             rb.velocity = new Vector2(rb.velocity.x ,runspeed);
         }
-        
+
+
+
     }
 
     bool Timer(){
